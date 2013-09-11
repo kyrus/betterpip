@@ -5,8 +5,12 @@ import subprocess
 from utils import *
 
 
-def install_r(requirements_txt_file, pip_commands=list(), build_cache=None,
-              install_results=list()):
+def install_r(requirements_txt_file, pip_commands=list(), build_cache=None, install_results=list()):
+    """
+    Like pip install -r <requirements file>, but installs the package's requirements.txt file
+    after installation
+    """
+
     with open(requirements_txt_file, 'rt') as f:
         for requirement in f.readlines():
             requirement = requirement.strip()
@@ -21,6 +25,11 @@ def install_r(requirements_txt_file, pip_commands=list(), build_cache=None,
 
 
 def install(requirement, pip_commands=list(), build_cache=None, install_results=list()):
+    """
+    Like pip install, but calls betterpip.install_r with the package's requirements.txt file
+    after installation
+    """
+
     # pip install <requirement>
     install_succeeded = True
     try:
@@ -38,8 +47,7 @@ def install(requirement, pip_commands=list(), build_cache=None, install_results=
             if build_cache:
                 package_requirements_file = os.path.join(build_cache, package_name, 'requirements.txt')
                 if os.path.isfile(package_requirements_file):
-                    install_r(package_requirements_file, pip_commands, build_cache,
-                              install_results)
+                    install_r(package_requirements_file, pip_commands, build_cache, install_results)
         else:
             logging.warning("Warning: installation of package [%s] may not have succeeded" % requirement)
 
