@@ -11,7 +11,10 @@ def main(args):
     if '-v' in args:
         args.remove('-v')
 
+    # todo: strip any other args out that we don't want to pass along
     pip_commands = list(args)
+
+    # todo: parse this out correctly
     build_cache = None
 
     install_results = []
