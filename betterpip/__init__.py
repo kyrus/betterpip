@@ -28,6 +28,7 @@ def install(requirement, pip_commands=list(), build_cache=None, install_results=
         output = subprocess.check_output(['pip', 'install'] + pip_commands + [requirement])
         print output
 
+        # TODO: handle the "package already up to date" message better
         # extract the package name from the output
         matcher = re.search('Successfully installed ([\w-]*)', output)
         if matcher:
